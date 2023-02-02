@@ -8,14 +8,19 @@ const ClassicEditor = require('aesirx-ckeditor');
 const FormEditor = ({ field }) => {
   const [editorState, setEditorState] = useState();
   const [show, setShow] = useState(false);
-  const onSelect = (data) => {
-    editorState?.model.change(() => {
-      const imgTag = `<img  src="${data[0]?.download_url}" alt="${data[0]?.basename}"></img>`;
-      const viewFragment = editorState.data.processor.toView(imgTag);
-      const modelFragment = editorState.data.toModel(viewFragment);
-      editorState.model.insertContent(modelFragment);
-    });
-    setEditorState();
+  const onInsert = (data) => {
+    data.length &&
+      editorState?.model.change(() => {
+        data.forEach((item) => {
+          const imgTag = `<img  src="${item?.download_url}" alt="${item?.basename}"></img>`;
+          const viewFragment = editorState.data.processor.toView(imgTag);
+          const modelFragment = editorState.data.toModel(viewFragment);
+          editorState.model.insertContent(modelFragment);
+        });
+      });
+    setShow(false);
+  };
+  const onCancel = () => {
     setShow(false);
   };
   const handleClose = () => {
@@ -25,11 +30,11 @@ const FormEditor = ({ field }) => {
     <div key={field.key} className="position-relative">
       <p
         onClick={() => setShow(true)}
-        className={`${styles['image-upload-button']} position-absolute bottom-0 end-0 zindex-1 mb-0 cursor-pointer`}
+        className={`${styles['image-upload-button']} position-absolute zindex-1 mb-0 cursor-pointer bg-white d-flex align-items-center justify-content-center rounded-2`}
       >
         <ComponentSVG url="/assets/images/data-stream.svg" className={'bg-black'} />
       </p>
-      <ModalDAMComponent show={show} onHide={handleClose} onSelect={onSelect} />
+      <ModalDAMComponent show={show} onHide={handleClose} onInsert={onInsert} onCancel={onCancel} />
       <div className={styles['custom-editor']}>
         <CKEditor
           editor={window.ClassicEditor ?? ClassicEditor}

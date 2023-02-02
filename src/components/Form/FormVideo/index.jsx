@@ -16,13 +16,17 @@ const FormVideo = ({ field }) => {
   const handleClose = () => {
     setShow(false);
   };
-  const onSelect = (data) => {
+  const onInsert = (data) => {
     let convertedData = data?.map((item) => ({
       id: item.id,
       download_url: item.download_url,
     }));
     convertedData.length && setFile(convertedData);
     field.handleChange(convertedData);
+    setShow(false);
+    field?.blurred();
+  };
+  const onCancel = () => {
     setShow(false);
     field?.blurred();
   };
@@ -64,7 +68,7 @@ const FormVideo = ({ field }) => {
           Add More Video
         </Button>
       </div>
-      <ModalDAMComponent show={show} onHide={handleClose} onSelect={onSelect} />
+      <ModalDAMComponent show={show} onHide={handleClose} onInsert={onInsert} onCancel={onCancel} />
     </>
   );
 };

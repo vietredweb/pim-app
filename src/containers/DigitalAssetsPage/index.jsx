@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { AesirXDam } from 'aesirx-dam-app';
+import { AesirXDam } from '@kakahuy113/test-dam-app';
 import { useThemeContext } from 'themes/ThemeContextProvider';
 
 function DigitalAssetsPage() {

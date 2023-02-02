@@ -16,9 +16,12 @@ const AvatarDAM = ({ formPropsData, avatarOnSelectHandler }) => {
 
   const [show, setShow] = useState(false);
 
-  const onSelect = (data) => {
+  const onInsert = (data) => {
     const imgUrl = data[0]?.download_url;
     avatarOnSelectHandler(imgUrl);
+    setShow(false);
+  };
+  const onCancel = () => {
     setShow(false);
   };
   const handleClose = () => {
@@ -27,7 +30,12 @@ const AvatarDAM = ({ formPropsData, avatarOnSelectHandler }) => {
   return (
     <div className="d-lg-flex justify-content-center mb-3 mb-lg-0">
       <div>
-        <ModalDAMComponent show={show} onHide={handleClose} onSelect={onSelect} />
+        <ModalDAMComponent
+          show={show}
+          onHide={handleClose}
+          onInsert={onInsert}
+          onCancel={onCancel}
+        />
         <label className="fw-semi form-label d-block mb-2" htmlFor="name">
           {t('txt_your_avatar')}
         </label>
@@ -43,7 +51,7 @@ const AvatarDAM = ({ formPropsData, avatarOnSelectHandler }) => {
             />
           ) : (
             <div className="position-relative d-inline-flex align-items-center justify-content-center text-uppercase cursor-pointer rounded-circle h-196 w-196 bg-black opacity-50">
-              <span className='text-white' style={{ fontSize: '9rem' }}>
+              <span className="text-white" style={{ fontSize: '9rem' }}>
                 {formPropsData[UPDATE_GENERAL_FIELD_KEY.USERNAME].slice(0, 1)}
               </span>
             </div>

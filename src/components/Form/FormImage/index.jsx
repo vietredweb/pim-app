@@ -21,7 +21,7 @@ const FormImage = ({ field, ...props }) => {
   const handleClose = () => {
     setShow(false);
   };
-  const onSelect = (data) => {
+  const onInsert = (data) => {
     let convertedData = data?.map((item) => ({
       id: item.id,
       download_url: item.download_url,
@@ -34,6 +34,10 @@ const FormImage = ({ field, ...props }) => {
       convertedData.length && setFile(convertedData);
       field.handleChange(convertedData);
     }
+    setShow(false);
+    field?.blurred();
+  };
+  const onCancel = () => {
     setShow(false);
     field?.blurred();
   };
@@ -124,7 +128,7 @@ const FormImage = ({ field, ...props }) => {
           <p className="my-8px fs-14 opacity-50">{t('txt_max_file_size')}</p>
         </div>
       )}
-      <ModalDAMComponent show={show} onHide={handleClose} onSelect={onSelect} />
+      <ModalDAMComponent show={show} onHide={handleClose} onInsert={onInsert} onCancel={onCancel} />
     </>
   );
 };
