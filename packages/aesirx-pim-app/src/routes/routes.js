@@ -30,7 +30,6 @@ const EditFieldGroupProvider = lazy(() => import('containers/FieldsGroupPage/edi
 
 const EditDebtorGroupProvider = lazy(() => import('containers/DebtorGroupPage/edit'));
 const EditProductPriceProvider = lazy(() => import('containers/ProductPricesPage/edit'));
-const EditVariantProvider = lazy(() => import('containers/VariantsPage/edit'));
 const ProductsPage = lazy(() => import('../containers/ProductsPage'));
 const ProductPrice = lazy(() => import('../containers/ProductPricesPage'));
 const CategoriesPage = lazy(() => import('../containers/CategoriesPage'));
@@ -64,6 +63,13 @@ const EditShippingZoneProvider = lazy(() => import('containers/ShippingZonePage/
 const ShippingRatePage = lazy(() => import('../containers/ShippingRatePage'));
 const EditShippingRateProvider = lazy(() => import('containers/ShippingRatePage/edit'));
 
+const PropertyPage = lazy(() => import('../containers/PropertyPage'));
+const EditPropertyProvider = lazy(() => import('containers/PropertyPage/edit'));
+const PropertyValuePage = lazy(() => import('../containers/PropertyValuePage'));
+const EditPropertyValueProvider = lazy(() => import('containers/PropertyValuePage/edit'));
+const VariantPage = lazy(() => import('../containers/VariantPage'));
+const EditVariantProvider = lazy(() => import('containers/VariantPage/edit'));
+
 const authRoutes = [
   {
     path: '/login',
@@ -84,12 +90,52 @@ const mainRoutes = [
     main: () => <ProductsPage />,
   },
   {
-    path: ['/variants/edit/:id'],
+    path: ['/property', '/property/all'],
+    exact: true,
+    main: () => <PropertyPage />,
+  },
+  {
+    path: ['/property/edit/:id'],
+    exact: true,
+    main: ({ match }) => <EditPropertyProvider match={match} />,
+  },
+  {
+    path: ['/property/add'],
+    exact: true,
+    main: () => <EditPropertyProvider />,
+  },
+  {
+    path: ['/property-value', '/property-value/all'],
+    exact: true,
+    main: () => <PropertyValuePage />,
+  },
+  {
+    path: ['/property-value/edit/:id'],
+    exact: true,
+    main: ({ match }) => <EditPropertyValueProvider match={match} />,
+  },
+  {
+    path: ['/property-value/add'],
+    exact: true,
+    main: () => <EditPropertyValueProvider />,
+  },
+  {
+    path: ['/variant', '/variant/all'],
+    exact: true,
+    main: () => <VariantPage />,
+  },
+  {
+    path: ['/variant/edit/:id'],
     exact: true,
     main: ({ match }) => <EditVariantProvider match={match} />,
   },
   {
-    path: ['/variants/add'],
+    path: ['/variant/add'],
+    exact: true,
+    main: () => <EditVariantProvider />,
+  },
+  {
+    path: ['/variant/add'],
     exact: true,
     main: () => <EditVariantProvider />,
   },

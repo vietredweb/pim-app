@@ -448,5 +448,22 @@
   "txt_type_zip_start": "Type Zip Start",
   "txt_zip_end": "Zip End",
   "txt_type_zip_end": "Type Zip End",
-  "txt_sso": "Single Sign On"
+  "txt_sso": "Single Sign On",
+  "txt_left_menu_property": "Property",
+  "txt_all_property": "All Property",
+  "txt_property": "Property",
+  "txt_add_property_name": "Add Property Name",
+  "txt_property_name": "Property Name",
+  "txt_left_menu_property_value": "Property Value",
+  "txt_all_property_value": "All Property Value",
+  "txt_property_value": "Propert Value",
+  "txt_add_property_value_name": "Add Property Value Name",
+  "txt_property_value_name": "Property Value Name",
+  "txt_select_property": "Select Property",
+  "txt_left_menu_variant": "Variant",
+  "txt_all_variant": "All Variant",
+  "txt_variant": "Propert Value",
+  "txt_add_variant_name": "Add Variant Name",
+  "txt_variant_name": "Variant Name",
+  "txt_select_property_value": "Select Property Value"
 }

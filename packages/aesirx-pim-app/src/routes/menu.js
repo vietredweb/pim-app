@@ -19,10 +19,18 @@ const mainMenu = [
         text: 'txt_left_menu_add_new',
         link: `/products/add`,
       },
-      // {
-      //   text: 'txt_left_menu_products_variant',
-      //   link: `/products/products-variant`,
-      // },
+      {
+        text: 'txt_left_menu_property',
+        link: `/property/all`,
+      },
+      {
+        text: 'txt_left_menu_property_value',
+        link: `/property-value/all`,
+      },
+      {
+        text: 'txt_left_menu_variant',
+        link: `/variant/all`,
+      },
     ],
   },
   {

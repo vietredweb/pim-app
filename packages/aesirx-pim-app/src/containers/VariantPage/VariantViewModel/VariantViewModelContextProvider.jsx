@@ -4,12 +4,19 @@
  */
 
 import React from 'react';
+import { VariantStore } from '../store';
+import VariantViewModel from './VariantViewModel';
 
-const VariantViewModelContext = React.createContext();
+const variantStore = new VariantStore();
+const variantViewModel = new VariantViewModel(variantStore);
 
-export const VariantViewModelContextProvider = ({ children, viewModel }) => {
+export const VariantViewModelContext = React.createContext({
+  model: variantViewModel,
+});
+
+export const VariantViewModelContextProvider = ({ children }) => {
   return (
-    <VariantViewModelContext.Provider value={viewModel}>
+    <VariantViewModelContext.Provider value={{ model: variantViewModel }}>
       {children}
     </VariantViewModelContext.Provider>
   );
@@ -20,5 +27,5 @@ export const useVariantViewModel = () => React.useContext(VariantViewModelContex
 
 /* HOC to inject store to any functional or class component */
 export const withVariantViewModel = (Component) => (props) => {
-  return <Component {...props} viewModel={useVariantViewModel()} />;
+  return <Component {...props} {...useVariantViewModel()} />;
 };
