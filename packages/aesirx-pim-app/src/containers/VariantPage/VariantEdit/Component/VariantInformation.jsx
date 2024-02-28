@@ -7,9 +7,13 @@ import { VariantViewModelContext } from 'containers/VariantPage/VariantViewModel
 import { Row } from 'react-bootstrap';
 import { PropertyValueStore } from 'containers/PropertyValuePage/store';
 import PropertyValueViewModel from 'containers/PropertyValuePage/PropertyValueViewModel/PropertyValueViewModel';
+import ProductStore from 'containers/ProductsPage/ProductStore/ProductStore';
+import ProductViewModel from 'containers/ProductsPage/ProductViewModel/ProductViewModel';
 
 const propertyValueStore = new PropertyValueStore();
 const propertyValueViewModel = new PropertyValueViewModel(propertyValueStore);
+const productStore = new ProductStore();
+const productViewModel = new ProductViewModel(productStore);
 
 const VariantInformation = observer(
   class VariantInformation extends Component {
@@ -18,6 +22,7 @@ const VariantInformation = observer(
     constructor(props) {
       super(props);
       this.propertyValueListViewModel = propertyValueViewModel.propertyValueListViewModel;
+      this.productListViewModel = productViewModel.productListViewModel;
       this.state = { country: null };
       this.validator = this.props.validator;
     }
@@ -25,14 +30,18 @@ const VariantInformation = observer(
     componentDidMount() {
       const fetchData = async () => {
         await this.propertyValueListViewModel.initializeAllData();
+        await this.productListViewModel.initializeDataListProduct();
       };
       fetchData();
     }
-
     render() {
       this.viewModel = this.context.model.variantDetailViewModel;
 
       const { t, validator } = this.props;
+      console.log(
+        'this.productListViewModel?.successResponse?.listProducts',
+        this.productListViewModel?.successResponse?.listProducts
+      );
 
       const generateFormSetting = [
         {
@@ -78,10 +87,69 @@ const VariantInformation = observer(
                   };
                 });
               },
-              required: true,
-              validation: 'required',
               placeholder: t('txt_select_property_value'),
               className: 'col-lg-12',
+            },
+            {
+              label: t('txt_product'),
+              key: 'product',
+              type: FORM_FIELD_TYPE.SELECTION,
+              getValueSelected: this.viewModel.variantDetailViewModel.formPropsData[
+                PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS
+              ]['pim_product']
+                ? {
+                    label:
+                      this.viewModel.variantDetailViewModel.formPropsData[
+                        PIM_VARIANT_DETAIL_FIELD_KEY.PRODUCT_NAME
+                      ],
+                    value:
+                      this.viewModel.variantDetailViewModel.formPropsData[
+                        PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS
+                      ]['pim_product'],
+                  }
+                : null,
+              getDataSelectOptions: this.productListViewModel?.successResponse?.listProducts?.length
+                ? this.productListViewModel?.successResponse?.listProducts?.map((item) => {
+                    return {
+                      label: item?.productInfo?.name,
+                      value: item?.id,
+                    };
+                  })
+                : [],
+              handleChange: async (data) => {
+                if (data) {
+                  this.viewModel.handleFormPropsData([PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS], {
+                    ['pim_product']: data?.value,
+                  });
+                  this.viewModel.handleFormPropsData(
+                    [PIM_VARIANT_DETAIL_FIELD_KEY.PRODUCT_NAME],
+                    data?.label
+                  );
+                }
+                this.setState((prevState) => {
+                  return {
+                    ...prevState,
+                  };
+                });
+              },
+              placeholder: t('txt_select_property_value'),
+              className: 'col-lg-12',
+            },
+            {
+              label: t('txt_sku'),
+              key: 'variant_sku',
+              type: FORM_FIELD_TYPE.INPUT,
+              getValueSelected:
+                this.viewModel.variantDetailViewModel.formPropsData[
+                  PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS
+                ]['sku'],
+              className: 'col-lg-12',
+              placeholder: t('txt_type_sku'),
+              handleChange: (event) => {
+                this.viewModel.handleFormPropsData([PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS], {
+                  ['sku']: event.target.value,
+                });
+              },
             },
           ],
         },

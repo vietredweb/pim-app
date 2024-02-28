@@ -129,4 +129,15 @@ export default class ProductStore {
       return { error: true, response: error?.response?.data };
     }
   }
+  async importProducts(data) {
+    try {
+      const aesirxPimProductApiService = new AesirxPimProductApiService();
+      const respondedData = await aesirxPimProductApiService.importProducts(data);
+      return { error: false, response: respondedData };
+    } catch (error) {
+      console.error(error);
+      return { error: true, response: error?.response?.data };
+    }
+  }
+  
 }

@@ -1,0 +1,69 @@
+@import 'aesirx-uikit/dist/utils/bootstrap.scss';
+
+@import '~bootstrap/scss/modal';
+@import '~bootstrap/scss/close';
+
+.close {
+  @extend .btn-close;
+
+  span {
+    display: none;
+  }
+}
+
+.noClose {
+  .close {
+    display: none;
+  }
+}
+
+.modal-header {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.modal-success,
+.modal-failed {
+  margin-top: -10px;
+  span {
+    position: relative;
+    &::after {
+      content: '';
+      background-color: $green;
+      opacity: 0.2;
+      position: absolute;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: notificationOverlay 2s ease-in infinite;
+    }
+  }
+}
+.modal-failed {
+  span {
+    &::after {
+      background-color: $danger;
+    }
+  }
+}
+@keyframes notificationOverlay {
+  0% {
+    width: 100%;
+    height: 100%;
+  }
+  50% {
+    width: 38px;
+    height: 38px;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .modal-dialog {
+    max-width: 700px;
+  }
+}

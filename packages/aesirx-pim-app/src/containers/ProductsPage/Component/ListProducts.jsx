@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { withProductViewModel } from '../ProductViewModel/ProductViewModelContextProvider';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Button, Form, Tab, Tabs } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Table, Spinner, notify, AesirXSelect as SelectComponent, ActionsBar } from 'aesirx-uikit';
+import ModalComponent from 'components/Modal';
+
 import DateRangePicker from 'components/DateRangePicker';
 import { historyPush } from 'routes/routes';
 import UtilsStore from 'store/UtilsStore/UtilsStore';
 import UtilsViewModel from 'store/UtilsStore/UtilsViewModel';
-
+import FormFile from 'components/Form/FormFile';
+import axios from 'axios';
+import { Spinner as SpinnerBootstrap } from 'react-bootstrap';
 const utilsStore = new UtilsStore();
 const utilsViewModel = new UtilsViewModel(utilsStore);
 
@@ -16,6 +20,10 @@ const ListProducts = observer((props) => {
   const { t } = props;
   let listSelected = [];
   const viewModel = props?.model?.productListViewModel;
+
+  const [popupImport, setPopupImport] = useState(false);
+  const [loadingImport, setLoadingImport] = useState(false);
+  const [dataImport, setDataImport] = useState();
   useEffect(() => {
     utilsViewModel?.utilsListViewModel.getListContentType({ 'filter[type]': 'product' });
     viewModel.initializeData();
@@ -91,12 +99,64 @@ const ListProducts = observer((props) => {
     viewModel.getListByFilter('filter[type]', value?.value);
   };
 
+  const handleButton = async () => {
+    setLoadingImport(true);
+    try {
+      await viewModel.importProducts();
+      setLoadingImport(false);
+      setPopupImport(false);
+    } catch (error) {
+      setLoadingImport(false);
+      throw error;
+    }
+  };
+
+  let modalBodyImport = (
+    <>
+      <Form>
+        <Form.Group key={Math.random(40, 200)} className={`mb-2`}>
+          <FormFile
+            field={{
+              value: '',
+              changed: (data) => {
+                viewModel.formImport = data;
+              },
+            }}
+            className={`mb-2 `}
+          />
+          <div className="w-100 mt-3">
+            <Button variant="success" className="fw-semibold" onClick={handleButton}>
+              {loadingImport && <SpinnerBootstrap size="sm" className="me-1" />}
+              Import
+            </Button>
+          </div>
+        </Form.Group>
+      </Form>
+    </>
+  );
+
   return (
     <>
       <div className="d-flex justify-content-between align-items-start mb-3">
         <h2 className="mb-0">{t('txt_title_product_management')}</h2>
+        <ModalComponent
+          header="Import CSV"
+          body={modalBodyImport}
+          show={popupImport}
+          onHide={() => {
+            setPopupImport(false);
+          }}
+          noClose="true"
+        ></ModalComponent>
         <ActionsBar
           buttons={[
+            {
+              title: t('txt_import'),
+              variant: 'outline-success',
+              handle: async () => {
+                setPopupImport(true);
+              },
+            },
             {
               title: t('txt_delete'),
               icon: '/assets/images/delete.svg',

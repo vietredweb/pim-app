@@ -462,8 +462,11 @@
   "txt_select_property": "Select Property",
   "txt_left_menu_variant": "Variant",
   "txt_all_variant": "All Variant",
-  "txt_variant": "Propert Value",
+  "txt_variant": "Variant",
   "txt_add_variant_name": "Add Variant Name",
   "txt_variant_name": "Variant Name",
-  "txt_select_property_value": "Select Property Value"
+  "txt_select_property_value": "Select Property Value",
+  "txt_import": "Import",
+  "txt_sku": "SKU",
+  "txt_type_sku": "Type SKU"
 }

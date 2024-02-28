@@ -27,11 +27,13 @@ class ProductListViewModel {
     listProducts: [],
     listCategories: [],
     pagination: {},
+    statusImport: false,
   };
   filterDate = {
     'filter[start_date]': '',
     'filter[end_date]': '',
   };
+  formImport = null;
   constructor(productStore) {
     makeAutoObservable(this);
     this.productStore = productStore;
@@ -86,7 +88,17 @@ class ProductListViewModel {
       this.successResponse.state = true;
     });
   };
-
+  importProducts = async () => {
+    const data = await this.productStore.importProducts(this.formImport);
+    runInAction(() => {
+      console.log('datadata', data);
+      if (!data?.error) {
+        this.onSuccessImportHandler(data?.response);
+      } else {
+        this.onErrorImportHandler(data?.response);
+      }
+    });
+  };
   setFeatured = async (id, featured = 0) => {
     const data = await this.productStore.update({
       id: id.toString(),
@@ -225,6 +237,18 @@ class ProductListViewModel {
       notify(message, 'success');
     }
     this.formStatus = PAGE_STATUS.READY;
+  };
+
+  onSuccessImportHandler = (result) => {
+    console.log('result', result);
+    if (result) {
+      notify('Import Success', 'success');
+    }
+  };
+  onErrorImportHandler = (result) => {
+    if (result) {
+      notify('Import failed', 'error');
+    }
   };
 
   onSuccessGetCategoriesHandler = (result) => {

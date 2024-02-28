@@ -1,0 +1,19 @@
+.btnChoose {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  padding: 4px 9px;
+}
+.dropzoneWrapper {
+  outline: 0;
+}
+.dropzoneInput {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: 60%;
+  padding-bottom: 5px;
+  line-height: 2;
+}
