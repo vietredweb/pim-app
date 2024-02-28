@@ -46,50 +46,50 @@ const VariantInformation = observer(
       const generateFormSetting = [
         {
           fields: [
-            {
-              label: t('txt_property_value'),
-              key: PIM_VARIANT_DETAIL_FIELD_KEY.TITLE,
-              type: FORM_FIELD_TYPE.SELECTION,
-              getValueSelected: this.viewModel.variantDetailViewModel.formPropsData[
-                PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS
-              ]['property_value']
-                ? {
-                    label:
-                      this.viewModel.variantDetailViewModel.formPropsData[
-                        PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS
-                      ]['property_value'],
-                    value:
-                      this.viewModel.variantDetailViewModel.formPropsData[
-                        PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS
-                      ]['property_value'],
-                  }
-                : null,
-              getDataSelectOptions: this.propertyValueListViewModel?.successResponse
-                ?.listPropertyValuesWithoutPagination?.length
-                ? this.propertyValueListViewModel?.successResponse?.listPropertyValuesWithoutPagination?.map(
-                    (item) => {
-                      return {
-                        label: item?.label,
-                        value: item?.value,
-                      };
-                    }
-                  )
-                : [],
-              handleChange: async (data) => {
-                if (data) {
-                  this.viewModel.handleFormPropsData([PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS], {
-                    ['property_value']: [data?.value],
-                  });
-                }
-                this.setState((prevState) => {
-                  return {
-                    ...prevState,
-                  };
-                });
-              },
-              placeholder: t('txt_select_property_value'),
-              className: 'col-lg-12',
-            },
+            // {
+            //   label: t('txt_property_value'),
+            //   key: PIM_VARIANT_DETAIL_FIELD_KEY.TITLE,
+            //   type: FORM_FIELD_TYPE.SELECTION,
+            //   getValueSelected: this.viewModel.variantDetailViewModel.formPropsData[
+            //     PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS
+            //   ]['property_value']
+            //     ? {
+            //         label:
+            //           this.viewModel.variantDetailViewModel.formPropsData[
+            //             PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS
+            //           ]['property_value'],
+            //         value:
+            //           this.viewModel.variantDetailViewModel.formPropsData[
+            //             PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS
+            //           ]['property_value'],
+            //       }
+            //     : null,
+            //   getDataSelectOptions: this.propertyValueListViewModel?.successResponse
+            //     ?.listPropertyValuesWithoutPagination?.length
+            //     ? this.propertyValueListViewModel?.successResponse?.listPropertyValuesWithoutPagination?.map(
+            //         (item) => {
+            //           return {
+            //             label: item?.label,
+            //             value: item?.value,
+            //           };
+            //         }
+            //       )
+            //     : [],
+            //   handleChange: async (data) => {
+            //     if (data) {
+            //       this.viewModel.handleFormPropsData([PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS], {
+            //         ['property_value']: [data?.value],
+            //       });
+            //     }
+            //     this.setState((prevState) => {
+            //       return {
+            //         ...prevState,
+            //       };
+            //     });
+            //   },
+            //   placeholder: t('txt_select_property_value'),
+            //   className: 'col-lg-12',
+            // },
             {
               label: t('txt_product'),
               key: 'product',
