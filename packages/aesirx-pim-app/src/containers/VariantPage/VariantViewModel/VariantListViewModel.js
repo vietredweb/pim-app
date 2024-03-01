@@ -131,6 +131,7 @@ class VariantListViewModel {
           id: o[PIM_VARIANT_DETAIL_FIELD_KEY.ID],
           title: o[PIM_VARIANT_DETAIL_FIELD_KEY.TITLE],
         },
+        sku: o[PIM_VARIANT_DETAIL_FIELD_KEY.CUSTOM_FIELDS]['sku'] ?? '',
         lastModified: {
           status: o[PIM_VARIANT_DETAIL_FIELD_KEY.PUBLISHED],
           dateTime: date ?? '',

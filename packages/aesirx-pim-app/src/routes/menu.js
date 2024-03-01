@@ -208,11 +208,7 @@ const integrationMenu = () => {
   return [
     ...mainMenu
       .filter(
-        (item) =>
-          item.link !== '/dam' &&
-          item.link !== '/' &&
-          item.link !== '/members' &&
-          item.link !== '/shipping-method'
+        (item) => item.link !== '/dam' && item.link !== '/' && item.link !== '/shipping-method'
       )
       .map((item) => {
         item.link = '/pim' + item.link;
@@ -233,6 +229,18 @@ const integrationMenu = () => {
     {
       text: 'txt_left_menu_debtor_group',
       link: `/pim/debtor-group`,
+    },
+    {
+      text: 'txt_left_menu_variant',
+      link: `/pim/variant/all`,
+    },
+    {
+      text: 'txt_left_menu_member_list',
+      link: `/pim/members`,
+    },
+    {
+      text: 'txt_left_menu_member_role',
+      link: `/pim/roles`,
     },
     ...menuSetup.map((item) => {
       item.link = '/pim' + item.link;

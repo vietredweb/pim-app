@@ -37,6 +37,19 @@ const ListVariant = observer((props) => {
         );
       },
     },
+    {
+      Header: t('txt_sku'),
+      accessor: 'sku',
+      width: 300,
+      className: 'py-18 text-gray border-bottom-1 text-uppercase fw-semibold align-middle',
+      Cell: ({ value }) => {
+        return (
+          <>
+            <div className="py-8px">{value}</div>
+          </>
+        );
+      },
+    },
   ];
 
   const currentSelectHandler = (arr) => {
